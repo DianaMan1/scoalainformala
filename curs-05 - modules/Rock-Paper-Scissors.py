@@ -1,7 +1,5 @@
 from random import choice
 
-# condition_1 = 'exit'
-
 # Ask for player name
 nume_jucator = input('Cum te cheama?')
 
