@@ -19,7 +19,7 @@ def validate_county(county_index):
 
 
 def validate_nnn(nnn_index):
-    return nnn_index >= 1
+    return 1 <= nnn_index <= 999
 
 
 def validate_control_char(cnp):
@@ -31,8 +31,13 @@ def validate_control_char(cnp):
 
     last_digit = int(cnp[12])
     modulo = current_sum % 11
+    print(modulo)
 
-    if modulo == 10 and last_digit != 1 or modulo != last_digit:
+    if modulo < 10:
+        c = modulo
+    else:
+        c = 1
+    if c != last_digit:
         return False
 
     return True

@@ -1,41 +1,38 @@
 from random import choice
 
-# Ask for player name
 nume_jucator = input('Cum te cheama?')
 
-# Greet and show playing options
-print("Optiunile tale sunt: \n Piatra \n Foarfeca \n Hartie")
-
-# Player is asking to make a choice
+print(f'Salut {nume_jucator}, Optiunile tale sunt\n piatra\n foarfece\n hartie')
 
 while True:
 
-    alegere_jucator = input('Alege o optiune: ')
+    alegere_jucator = input('Alege o optiune:')
+    alegeri_totale = ['piatra', 'foarfece', 'hartie']
 
-    alegeri_totale = ['piatra', 'foarfeca', 'hartie']
+    while alegere_jucator not in ['piatra', 'foarfece', 'hartie']:
+            print(f'{alegere_jucator}, nu este o alegere buna, alege din nou')
+            alegere_jucator = input('Alege o optiune:')
 
-    alegere_calculator = random.choice(alegeri_totale)
+    alege_calculator = choice(alegeri_totale)
 
-    print(f'Tu ai ales {alegere_jucator}, si calculatorul a ales {alegere_calculator}')
+    print(f'Tu ai ales {alegere_jucator}, si NPCul a ales {alege_calculator}')
 
-    if alegere_jucator == alegere_calculator:
-        print('Ati ales amandoi acelasi lucru. Incearca din nou.')
-    elif alegere_jucator == 'piatra' and alegere_calculator == 'foarfeca':
-        print('Piatra bate foarfeca. Ai castigat!')
-    elif alegere_jucator == 'foarfeca' and alegere_calculator == 'hartie':
-        print('Foarfeca bate hartia. Ai castigat!')
-    elif alegere_jucator == 'hartie' and alegere_calculator == 'piatra':
-        print('Hartie bate piatra. Ai castigat!')
-
-    elif alegere_jucator == 'foarfeca' and alegere_calculator == 'piatra':
-        print('Piatra bate foarfeca. Ai pierdut!')
-    elif alegere_jucator == 'hartie' and alegere_calculator == 'foarfeca':
-        print('Foarfeca bate hartia. Ai pierdut!')
-    elif alegere_jucator == 'piatra' and alegere_calculator == 'hartie':
-        print('Hartie bate piatra. Ai pierdut!')
-
-    restart_joc = input('Vrei sa joci din nou? Da/Nu: ')
-    if restart_joc != "Da":
+    if alegere_jucator == alege_calculator:
+        print('Ati ales amandoi acelas lucru. Incearca din nou.')
+    elif alegere_jucator == 'piatra' and alege_calculator == 'foarfece':
+        print('Piatra bate foarfeca. Ai castigat')
+    elif alegere_jucator == 'foarfece' and alege_calculator == 'hartie':
+        print('Piatra bate foarfeca. Ai castigat')
+    elif alegere_jucator == 'hartie' and alege_calculator == 'piatra':
+        print('Hartie bate piatra. Ai castigat')
+    elif alegere_jucator == 'foarfece' and alege_calculator == 'piatra':
+        print('Piatra bate foarfeca. Ai pierdut')
+    elif alegere_jucator == 'hartie' and alege_calculator == 'foarfece':
+        print('Piatra bate foarfeca. Ai pierdut')
+    elif alegere_jucator == 'piatra' and alege_calculator == 'hartie':
+        print('Hartie bate piatra. Ai pierdut')
+    restart_joc = input('vrei sa joci din nou? da sau nu:')
+    if restart_joc != 'da':
         break
 
 
