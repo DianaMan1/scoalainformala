@@ -1,8 +1,11 @@
-from pandas import read_json, DataFrame
+from pandas import read_json, DataFrame, to_datetime
 from datetime import datetime
+from json import load
 
 my_file = read_json('categories.json')
 my_categories = my_file.categories.tolist()
+file_name = 'tasks.json'
+date_format = "%d.%m.%Y %H:%M"
 
 
 def input_category():
@@ -20,7 +23,6 @@ def input_category():
 
 def input_date():
     the_date = None
-    date_format = "%d.%m.%Y %H:%M"
 
     while the_date is None:
         date_string = input('Introduceti data & ora limita a taskului:')
@@ -59,13 +61,59 @@ def check_if_over():
         else:
             print('Raspuns incorect.')
 
+
 tasks = []
 
-while True:
-    tasks.append((input_task()))
-    is_over = check_if_over()
 
-    if is_over:
-        df = DataFrame(tasks)
-        df.to_json('tasks.json', orient="records")
-        break
+def open_task_inputter():
+    while True:
+        tasks.append((input_task()))
+        is_over = check_if_over()
+
+        if is_over:
+            df = DataFrame(tasks)
+            df.to_json(file_name, orient="records")
+            break
+
+
+# load, dumbs, deschidere fisier normala
+
+def open_task_listing():
+    file = open(file_name)
+    task_data = load(file)
+
+    for task in task_data:
+        category = task['category']
+        date = to_datetime(task['date'], utc=True)
+        person = task['person']
+        task_name = task['task']
+        print(f'{category} - Until {date}, {person} has to {task_name}.')
+
+
+def open_menu():
+    while True:
+        main_options = ['input', 'output', 'sort', 'stop']
+        main_option = None
+
+        while main_option not in main_options:
+            inputted_option = input('Select an option:')
+            if inputted_option in main_options:
+                main_option = inputted_option
+            else:
+                print('This is not a valid option.')
+
+        if main_option == 'input':
+            open_task_inputter()
+
+        if main_option == 'output':
+            open_task_listing()
+
+        if main_option == 'stop':
+            break
+
+
+def run_app():
+    open_menu()
+
+
+run_app()
