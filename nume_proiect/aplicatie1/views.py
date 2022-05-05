@@ -12,6 +12,9 @@ from aplicatie1.models import Location
 class LocationsView(LoginRequiredMixin,ListView):
     model = Location
     template_name = 'aplicatie1/location_index.html'
+    paginate_by = 5
+    queryset = model.objects.filter(active=1)
+    context_object_name = 'locations'
 
     def get_context_data(self):
         data = super(LocationsView, self).get_context_data()
@@ -47,9 +50,12 @@ def activate_location(request, pk):
     Location.objects.filter(id=pk).update(active=1)
     return redirect('locations:lista_locatii')
 
-class LocationInactiveView(ListView):
+class LocationInactiveView(LoginRequiredMixin,ListView):
     model = Location
     template_name = 'aplicatie1/location_index.html'
+    paginate_by = 5
+    queryset = model.objects.filter(active=0)
+    context_object_name = 'locations'
 
 
     def get_context_data(self, *args, **kwargs):
