@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<br/>
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top" src={{data.flagImageUri}} alt="Card image cap">
+
+    <div class="card-body">
+        <h5 class="card-title">{{data.name}}  - {{data.code}} - </h5>
+
+        <p class="card-text">This country has {{data.numRegions}} regions.</p>
+
+        <button onclick="handle_fav('{{data.code}}')" type="button" class="btn btn-default btn-sm">
+            <span>
+                {% if is_favorite %}
+                    <i id="icon-{{data.code}}--filled" class="bi bi-heart-fill"></i>
+                {% else %}
+                    <i id="icon-{{data.code}}--unfilled" class="bi bi-heart"></i>
+                {%endif%}
+            </span>
+        </button>
+    </div>
+</div>
+<br/>
+<div class="regions_grid">
+    {%for region in regions.items%}
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">{{region.name}}  - {{region.isoCode}}</h5>
+
+                <button onclick="handle_fav_region('{{data.code}}', '{{region.isoCode}}')" type="button" class="btn btn-default btn-sm">
+                    <span>
+                        {% if region.is_favorite %}
+                            <i id="icon-{{data.code}}-{{region.isoCode}}--filled" class="bi bi-heart-fill"></i>
+                        {% else %}
+                            <i id="icon-{{data.code}}-{{region.isoCode}}--unfilled" class="bi bi-heart"></i>
+                        {%endif%}
+                    </span>
+                </button>
+            </div>
+        </div>
+    {%endfor%}
+
+     {%if regions.total_pages > 1%}
+        <section aria-label="Page navigation">
+            <ul class="pagination">
+                <li class="page-item">
+                    <button class="page-link" onclick="previous_page()" type="button"
+                        {%if regions.is_first_page%}
+                            disabled
+                        {%endif%}
+                    >
+                        Previous
+                    </button>
+                </li>
+
+                <li class="page-item"><button class="page-link" disabled>{{regions.current_page}} of {{regions.total_pages}}</button></li>
+
+                <li class="page-item">
+                    <button class="page-link" onclick="next_page()" type="button"
+                        {%if regions.is_last_page%}
+                            disabled
+                        {%endif%}
+                    >
+                        Next
+                    </button>
+                </li>
+            </ul>
+    {%endif%}
+
+    </div>
+{% endblock %}

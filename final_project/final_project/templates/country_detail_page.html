@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<br/>
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top" src={{data.flagImageUri}} alt="Card image cap">
+
+    <div class="card-body">
+        <h5 class="card-title">{{data.name}}  - {{data.code}} - </h5>
+
+        <p class="card-text">This country has {{data.numRegions}} regions.</p>
+
+        <button onclick="handle_fav('{{data.code}}')" type="button" class="btn btn-default btn-sm">
+            <span>
+                {% if is_favorite %}
+                    <i id="icon-{{data.code}}--filled" class="bi bi-heart-fill"></i>
+                {% else %}
+                    <i id="icon-{{data.code}}--unfilled" class="bi bi-heart"></i>
+                {%endif%}
+            </span>
+        </button>
+
+        <div>
+            <br/>
+            {% if data.numRegions > 0%}
+                <a class="btn btn-primary" href="regions">Regions</a>
+            {%endif%}
+
+            <a class="btn btn-primary" href="cities">Cities</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
